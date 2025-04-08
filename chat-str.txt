@@ -1,0 +1,11 @@
+chat_app/
+├── server/
+│   ├── server.py         # Основной сервер
+│   ├── file_server.py    # Файловый сервер (опционально)
+│   └── server_files/     # Папка для хранения файлов
+├── client/
+│   ├── client.py         # Клиент
+│   └── downloads/        # Папка для загрузок
+└── shared/
+    ├── encryption.py     # Модуль шифрования
+    └── protocols.py      # Протоколы обмена

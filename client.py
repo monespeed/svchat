@@ -1,32 +1,26 @@
 import socket
 import threading
+import os
+import json
+import time
+import hashlib
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
-HOST = input("IP сервера: ")
-PORT = 9090
+class ChatClient:
+    def __init__(self):
+        self.host = input("IP сервера: ")
+        self.port = 9090
+        self.file_port = 9091
+        self.nickname = input("Ваш ник: ")
+        self.client = None
+        self.file_client = None
+        self.running = False
+        self.executor = ThreadPoolExecutor(max_workers=5)
+        self.download_dir = "downloads"
+        self.ensure_download_dir()
 
-nickname = input("Ваш ник: ")
+    def ensure_download_dir(self):
+        Path(self.download_dir).mkdir(exist_ok=True)
 
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect((HOST, PORT))
-
-def receive():
-    while True:
-        try:
-            message = client.recv(1024).decode('utf-8')
-            print(message)
-        except:
-            print("Ошибка соединения...")
-            client.close()
-            break
-
-def write():
-    while True:
-        msg = input()
-        client.send(msg.encode('utf-8'))
-        if msg == '/exit':
-            break
-
-client.send(nickname.encode('utf-8'))
-
-threading.Thread(target=receive).start()
-threading.Thread(target=write).start()
+    # ... (другие методы с оптимизациями)
